@@ -5,6 +5,7 @@ const
     greeting = document.querySelector('.greeting'),
     username = document.querySelector('.username'),
     search = document.querySelector('.search'),
+    adds = document.querySelector('.weather-adds'),
     backbutton = document.querySelector('.backbutton'),
     langbutton = document.querySelector('.langbutton'),
     enbutton = document.getElementsByClassName('enbutton'),
@@ -126,10 +127,18 @@ function getLanguage(){
     if (localStorage.getItem('language') === 'EN'){
         langbutton.innerHTML = 'EN';
         search.placeholder = 'Search by city';
+        feelslike = 'Feels like: ';
+        wind = 'Wind: ';
+        humidity = 'Humidity: ';
+        speed = ' m/s';
     }
     else{
         langbutton.textContent = 'RU';
         search.placeholder = 'Поиск по городу';
+        feelslike = 'Чувствуется как: ';
+        wind = 'Ветер: ';
+        humidity = 'Влажность: ';
+        speed = ' м/с';
     } 
 }
 
@@ -139,6 +148,7 @@ function setMeasure(e){
   else if (e.target.className == 'fbutton')
     localStorage.setItem('measure', 'imperial');
   getMeasure();
+  getWeather();
 }
 
 function getMeasure(){
@@ -150,18 +160,25 @@ else{
     fbutton[0].style.background = 'black';
     cbutton[0].style.background = 'rgba(0,0,0,0.5)';
 }
-getWeather();
 }
 
-async function getWeather(ipdata){
+function ucFirst(str) {
+  if (!str) return str;
+
+  return str[0].toUpperCase() + str.slice(1);
+}
+
+async function getWeather(){
   let res;
     if ((town == null)||(town == ''))
       town = await getIP();
-        res = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${town}&lang=${localStorage.getItem('language')}&units=${localStorage.getItem('measure')}&APPID=9cb6cff3a8e7050935724619d2067534`);
-      const data = await res.json();
-      weatherIcon.className = 'weather-icon owf';
-      weatherIcon.classList.add(`owf-${data.list[0].weather[0].id}`);
-      temp.textContent = Math.round(data.list[0].main.temp)+'°';
+    res = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${town}&lang=${localStorage.getItem('language')}&units=${localStorage.getItem('measure')}&APPID=9cb6cff3a8e7050935724619d2067534`);
+    const data = await res.json();
+    weatherIcon.className = 'weather-icon owf';
+    weatherIcon.classList.add(`owf-${data.list[0].weather[0].id}`);
+    temp.textContent = Math.round(data.list[0].main.temp)+'°';
+    adds.innerHTML = ucFirst(data.list[0].weather[0].description) + '<br>' + feelslike + Math.round(data.list[0].main.feels_like) + '°<br>' + wind + 
+    Math.round(data.list[0].wind.speed) + speed + '<br>' + humidity + data.list[0].main.humidity + '%';
     timezone = parseInt(data.city.timezone)*1000;
     enrustown = data.city.name;
     country = data.city.country;
@@ -227,13 +244,17 @@ async function start(){
   await getWeather();
   await edBackground();
   setCity();
-  showDate();
   getMeasure();
+  showDate();
 }
 
 var town,
 rustown,
-country;
+country,
+feelslike,
+wind,
+humidity,
+speed;
 var isEnter = 0;
 var timezone;
 backbutton.addEventListener('click', edBackground);
