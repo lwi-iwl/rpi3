@@ -13,16 +13,23 @@ const
     cbutton = document.getElementsByClassName('cbutton'),
     fbutton = document.getElementsByClassName('fbutton'),
     searchbutton = document.querySelector('.searchbutton'),
+    ltlg = document.querySelector('.ltlg'),
     weatherIcon = document.querySelector('.weather-icon'),
+    follow = document.querySelectorAll('.follow'),
+    followicon = document.querySelectorAll('.follow-icon'),
+    followdate = document.querySelectorAll('.followdate'),
     qcbutton = document.querySelector('.cbutton'),
     qfbutton = document.querySelector('.fbutton'),
     qenbutton = document.querySelector('.enbutton'),
     qrubutton = document.querySelector('.rubutton'),
+    map = document.querySelector('.map'),
     temp = document.querySelector('.temp'),
     dayname = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    fulldayname = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", " Saturday"],
     monthname = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", " December"],
     rusdayname = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
+    fullrusdayname = ["Воскресение", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
     rusmonthname = ["января","февраля","марта","апреля","мая","июня",
   "июля","августа","сентября","октября","ноября","декабря"],
     region = new Intl.DisplayNames(['en'], { type: 'region' }),
@@ -42,9 +49,19 @@ async function showDate() {
   time.innerHTML = `${hour}:${addZero(minute)}:${addZero(sec)}
   <br>`;
   if (localStorage.getItem('language') === 'EN')
+  {
     date.innerHTML = `${dayname[day]}, ${daynumber} ${monthname[month]}`
+    followdate[0].textContent = fulldayname[(day+1)%7];
+    followdate[1].textContent = fulldayname[(day+2)%7];
+    followdate[2].textContent = fulldayname[(day+3)%7];
+  }
   else
+  {
     date.innerHTML = `${rusdayname[day]}, ${daynumber} ${rusmonthname[month]}`
+    followdate[0].textContent = fullrusdayname[(day+1)%7];
+    followdate[1].textContent = fullrusdayname[(day+2)%7];
+    followdate[2].textContent = fullrusdayname[(day+3)%7];
+  }
   setTimeout(showDate, 1000);
 }
 
@@ -118,7 +135,11 @@ async function setLanguage(e){
     else
     localStorage.setItem('language', 'RU');
     getLanguage();
-    await getWeather();
+    await getCoordinates();
+    if ((search.placeholder == 'Введите корректный город') || (search.placeholder == 'Enter the correct city'))
+      await getWeather(1);
+    else
+      await getWeather(0);
     setCity();
     showDate();
 }
@@ -126,19 +147,33 @@ async function setLanguage(e){
 function getLanguage(){
     if (localStorage.getItem('language') === 'EN'){
         langbutton.innerHTML = 'EN';
-        search.placeholder = 'Search by city';
+        if ((search.placeholder == 'Введите корректный город') || (search.placeholder == 'Enter the correct city'))
+          search.placeholder = 'Enter the correct city'
+        else
+        {
+          search.placeholder = 'Search by city';
+        }
         feelslike = 'Feels like: ';
         wind = 'Wind: ';
         humidity = 'Humidity: ';
         speed = ' m/s';
+        latitude = 'Latitude: ';
+        longitude = 'Longitude: ';
     }
     else{
         langbutton.textContent = 'RU';
-        search.placeholder = 'Поиск по городу';
+        if ((search.placeholder == 'Введите корректный город') || (search.placeholder == 'Enter the correct city')){
+         alert('sdsd');
+          search.placeholder = 'Введите корректный город'
+        }
+        else
+          search.placeholder = 'Поиск по городу';
         feelslike = 'Чувствуется как: ';
         wind = 'Ветер: ';
         humidity = 'Влажность: ';
         speed = ' м/с';
+        latitude = 'Широта: ';
+        longitude = 'Долгота: '
     } 
 }
 
@@ -148,7 +183,7 @@ function setMeasure(e){
   else if (e.target.className == 'fbutton')
     localStorage.setItem('measure', 'imperial');
   getMeasure();
-  getWeather();
+  getWeather(0);
 }
 
 function getMeasure(){
@@ -168,20 +203,50 @@ function ucFirst(str) {
   return str[0].toUpperCase() + str.slice(1);
 }
 
-async function getWeather(){
+async function getWeather(a){
   let res;
     if ((town == null)||(town == ''))
       town = await getIP();
     res = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${town}&lang=${localStorage.getItem('language')}&units=${localStorage.getItem('measure')}&APPID=9cb6cff3a8e7050935724619d2067534`);
     const data = await res.json();
-    weatherIcon.className = 'weather-icon owf';
-    weatherIcon.classList.add(`owf-${data.list[0].weather[0].id}`);
-    temp.textContent = Math.round(data.list[0].main.temp)+'°';
-    adds.innerHTML = ucFirst(data.list[0].weather[0].description) + '<br>' + feelslike + Math.round(data.list[0].main.feels_like) + '°<br>' + wind + 
-    Math.round(data.list[0].wind.speed) + speed + '<br>' + humidity + data.list[0].main.humidity + '%';
-    timezone = parseInt(data.city.timezone)*1000;
-    enrustown = data.city.name;
-    country = data.city.country;
+    if (data.cod == '404')
+    {
+      if (localStorage.getItem('language') === 'EN')
+        search.placeholder = 'Enter the correct city';
+      else
+      search.placeholder = 'Введите корректный город';
+      search.value = '';
+      town = oldtown;
+      getWeather(1);
+      return 1;
+    }
+    else
+    {
+      if (a == 0)
+      if (localStorage.getItem('language') === 'EN')
+        search.placeholder = 'Search by city';
+      else
+        search.placeholder = 'Поиск по городу';
+      oldtown = town;
+      weatherIcon.className = 'weather-icon owf';
+      weatherIcon.classList.add(`owf-${data.list[0].weather[0].id}`);
+      followicon[0].className = 'follow-icon owf';
+      followicon[0].classList.add(`owf-${data.list[1].weather[0].id}`);
+      followicon[1].className = 'follow-icon owf';
+      followicon[1].classList.add(`owf-${data.list[2].weather[0].id}`);
+      followicon[2].className = 'follow-icon owf';
+      followicon[2].classList.add(`owf-${data.list[3].weather[0].id}`);
+      temp.textContent = Math.round(data.list[0].main.temp)+'°';
+      follow[0].textContent = Math.round(data.list[1].main.temp)+'°';
+      follow[1].textContent = Math.round(data.list[2].main.temp)+'°';
+      follow[2].textContent = Math.round(data.list[3].main.temp)+'°';
+      adds.innerHTML = ucFirst(data.list[0].weather[0].description) + '<br>' + feelslike + Math.round(data.list[0].main.feels_like) + '°<br>' + wind + 
+      Math.round(data.list[0].wind.speed) + speed + '<br>' + humidity + data.list[0].main.humidity + '%';
+      timezone = parseInt(data.city.timezone)*1000;
+      enrustown = data.city.name;
+      country = data.city.country;
+      return 0;
+    }
 }
 
 async function getIP(){
@@ -216,11 +281,39 @@ async function setTown(e){
     if (e.which == 13 || e.keyCode == 13 || e.type == 'click') {
       town = search.value;
       search.blur();
-      await getWeather();
+      isTown = await getWeather(0);
+      setMap();
       setCity();
+      if (isTown == 0)
       edBackground();
     }
 }
+
+function toLnLt(str){
+  return (str).split('.')[0] + '°' + ((str).split('.')[1]).substr(0, 2)+"'";
+}
+
+async function getCoordinates(){
+  const res = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${town}&key=26a6cc765a894ab2bf73d80cda6edb40&pretty=1&no_annotations=1`);
+  const data = await res.json();
+  ltlg.innerHTML = latitude + toLnLt(data.results[0].geometry.lat+'') +'<br>' + longitude + toLnLt(data.results[0].geometry.lng+'');
+  return data;
+}
+
+async function setMap(){
+  const data = await getCoordinates();
+	mapboxgl.accessToken = 'pk.eyJ1Ijoibmlrc3QiLCJhIjoiY2tvcTJ3NjVwMHJjZDJ5bnV6dHVzdjhlZCJ9.8B-D92hQsycsBHOyCWxtdQ';
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11',
+    center: [data.results[0].geometry.lng, data.results[0].geometry.lat],
+    zoom: 12
+    });
+    var marker1 = new mapboxgl.Marker()
+    .setLngLat([data.results[0].geometry.lng, data.results[0].geometry.lat])
+    .addTo(map);
+  }
+
 
 function setCity(){
   if (localStorage.getItem('language') == 'EN'){
@@ -241,20 +334,24 @@ function getStartMeasure(){
 async function start(){
   await getStartMeasure();
   await getLanguage();
-  await getWeather();
+  await getWeather(0);
   await edBackground();
+  setMap();
   setCity();
   getMeasure();
   showDate();
 }
 
 var town,
+oldtown,
 rustown,
 country,
 feelslike,
 wind,
 humidity,
-speed;
+speed,
+latitude,
+longitude;
 var isEnter = 0;
 var timezone;
 backbutton.addEventListener('click', edBackground);

@@ -51,9 +51,35 @@
   }
 
   .weather-adds{
-    font-size: 25px;
-    margin-top: 130px;
+    font-size: 22px;
+    margin-top: 140px;
     margin-left: -100px;
+  }
+
+  .following{
+    display:flex;
+    margin-left: 25px;
+  }
+
+  .foll{
+    display:inline;
+    margin-left: 40px;
+  }
+
+  .follow{
+    display:inline;
+    margin-top: -40px;
+    font-size: 100px;
+  }
+
+  .follow-icon{
+    margin-left: -10px;
+    display:inline;
+    font-size: 100px;
+  }
+
+  .followdate{
+    font-size: 20px;
   }
 
   .head{
@@ -211,6 +237,25 @@
     cursor: pointer;
   }
 
+  #map { 
+    top: 170px;
+    right: 30px;
+    position: absolute;
+    height: 345px;
+    width: 445px;
+    border-radius: 10px;
+    clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 25% 100%, 0% 50%);
+  }
+
+
+  .ltlg{
+    font-size: 20px;
+    text-align: right;
+    top: 570px;
+    right: 30px;
+    position: absolute;
+  }
+
   .search{
     align-items: left;
     text-align: left;
@@ -223,7 +268,7 @@
     background-size: 55px 50px;
     border: 0;
     transition: background-size .3s;
-    font-size: 35px;
+    font-size: 20px;
     color:white;
     text-shadow: 2px 2px 2px #000;
     border-radius: 5px;
