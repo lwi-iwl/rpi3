@@ -13,7 +13,7 @@
     color:white;
     display: flex;
     flex-direction: column;
-    font-family: 'Quicksand', sans-serif;
+    font-family: "Gill Sans", sans-serif;
     align-items: left;
     justify-content: left;
     text-align: left;
@@ -22,7 +22,7 @@
     background-position: center;
     transition: 1s;
     transition-delay: 0.5s;
-    text-shadow: 2px 2px 2px #000;
+    text-shadow: 4px 4px 4px #000;
   }
 
   .town{
@@ -36,15 +36,19 @@
   }
 
   .weather{
-    width:200px;
-    color:white;
-    position: fixed;
-    top: 0;
-    right: 0;
-    background-color: rgba(0,0,0,0.5);
-    border-radius: 5px;
+    display: flex;
   }
 
+  .temp{
+    font-size: 250px;
+    margin-left: 60px;
+  }
+
+  .weather-icon{
+    font-size: 200px;
+    margin-top: -35px;
+    margin-left: -20px;
+  }
 
   .head{
     margin-left: 80px;
@@ -145,6 +149,7 @@
     }
 
   .time {
+    margin-left: 20px;
     font-family: "DSEG7 Classic";
     font-size: 1.5rem;
   }

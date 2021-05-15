@@ -12,10 +12,12 @@ const
     cbutton = document.getElementsByClassName('cbutton'),
     fbutton = document.getElementsByClassName('fbutton'),
     searchbutton = document.querySelector('.searchbutton'),
+    weatherIcon = document.querySelector('.weather-icon'),
     qcbutton = document.querySelector('.cbutton'),
     qfbutton = document.querySelector('.fbutton'),
     qenbutton = document.querySelector('.enbutton'),
     qrubutton = document.querySelector('.rubutton'),
+    temp = document.querySelector('.temp'),
     dayname = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
     monthname = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", " December"],
@@ -121,7 +123,7 @@ async function setLanguage(e){
 }
 
 function getLanguage(){
-    if ((localStorage.getItem('language') === null) || (localStorage.getItem('language') === 'EN')){
+    if (localStorage.getItem('language') === 'EN'){
         langbutton.innerHTML = 'EN';
         search.placeholder = 'Search by city';
     }
@@ -133,14 +135,14 @@ function getLanguage(){
 
 function setMeasure(e){
   if (e.target.className == 'cbutton')
-      localStorage.setItem('measure', 'C');
+      localStorage.setItem('measure', 'metric');
   else if (e.target.className == 'fbutton')
-    localStorage.setItem('measure', 'F');
+    localStorage.setItem('measure', 'imperial');
   getMeasure();
 }
 
 function getMeasure(){
-  if ((localStorage.getItem('measure') === null) || (localStorage.getItem('measure') === 'C')){
+  if (localStorage.getItem('measure') === 'metric'){
     cbutton[0].style.background = 'black';
     fbutton[0].style.background = 'rgba(0,0,0,0.5)';
 }
@@ -148,15 +150,20 @@ else{
     fbutton[0].style.background = 'black';
     cbutton[0].style.background = 'rgba(0,0,0,0.5)';
 }
+getWeather();
 }
 
 async function getWeather(ipdata){
-    if (town == null)
+  let res;
+    if ((town == null)||(town == ''))
       town = await getIP();
-    const res = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${town}&lang=ru&units=metric&APPID=9cb6cff3a8e7050935724619d2067534`);
-    const data = await res.json();
+        res = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${town}&lang=${localStorage.getItem('language')}&units=${localStorage.getItem('measure')}&APPID=9cb6cff3a8e7050935724619d2067534`);
+      const data = await res.json();
+      weatherIcon.className = 'weather-icon owf';
+      weatherIcon.classList.add(`owf-${data.list[0].weather[0].id}`);
+      temp.textContent = Math.round(data.list[0].main.temp)+'°';
     timezone = parseInt(data.city.timezone)*1000;
-    rustown = data.city.name;
+    enrustown = data.city.name;
     country = data.city.country;
 }
 
@@ -169,7 +176,7 @@ async function getIP(){
 
 function hover(e){
   if (e.target.className == 'cbutton'){
-    if ((localStorage.getItem('measure') != null)&&(localStorage.getItem('measure') != 'C'))
+    if (localStorage.getItem('measure') != 'metric')
     {
       if (e.type == 'mouseenter')
         cbutton[0].style.background = 'rgba(0,0,0,0.7)';
@@ -178,7 +185,7 @@ function hover(e){
     }
   }
   else{
-    if ((localStorage.getItem('measure') === null)||(localStorage.getItem('measure') === 'C'))
+    if (localStorage.getItem('measure') === 'metric')
     {
       if (e.type == 'mouseenter')
         fbutton[0].style.background = 'rgba(0,0,0,0.7)';
@@ -200,14 +207,22 @@ async function setTown(e){
 
 function setCity(){
   if (localStorage.getItem('language') == 'EN'){
-    city.textContent = town+', '+region.of(country);
+    city.textContent = enrustown+', '+region.of(country);
   }
   else{
-    city.textContent = rustown+', '+rusregion.of(country);
+    city.textContent = enrustown+', '+rusregion.of(country);
   }
 }
 
+function getStartMeasure(){
+  if ((localStorage.getItem('language') == null))
+    localStorage.setItem('language', 'EN');
+  if ((localStorage.getItem('measure') == null))
+    localStorage.setItem('measure', 'metric');
+}
+
 async function start(){
+  await getStartMeasure();
   await getLanguage();
   await getWeather();
   await edBackground();
