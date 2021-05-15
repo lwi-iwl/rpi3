@@ -4,15 +4,19 @@
     padding: 0;
   }
   
+  ::placeholder {
+    color: white;
+    opacity: 1; 
+  }
   
   body {
     color:white;
     display: flex;
     flex-direction: column;
     font-family: 'Quicksand', sans-serif;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    align-items: left;
+    justify-content: left;
+    text-align: left;
     height: 100vh;
     background-size: 1560px 800px;
     background-position: center;
@@ -25,6 +29,12 @@
     text-align: center;  
   }
 
+  .city{
+    margin-left: 80px;
+    margin-top: 50px;
+    font-size:50px;
+  }
+
   .weather{
     width:200px;
     color:white;
@@ -35,62 +45,209 @@
     border-radius: 5px;
   }
 
-  .quotebutton{
-    margin: 2rem;
-    display: inline;
-    font-size: 1.5rem;
-    color: white;
-    font-weight: bold;
-    background-image: linear-gradient(white, white);
-    background-position: 0% 100%;
-    background-repeat: no-repeat;
-    background-size: 0% 2px;
-    transition: background-size .6s;
-  
-  }
 
-  .quotebutton:hover{
-    background-size: 100% 2px; 
-    cursor: pointer;
+  .head{
+    margin-left: 80px;
+    margin-top: 30px;
   }
-
-  .quote{
-    color:white;
-    position: fixed;
-    bottom: 0;
-    margin-bottom: 10px;
-    padding:5px;
-    background-color: rgba(0,0,0,0.5);
-    border-radius: 5px;
-  }
-
   
   .backbutton{
-    margin: 2rem;
-    display: inline;
-    font-size: 1.5rem;
-    color: white;
-    font-weight: bold;
-    background-image: linear-gradient(white, white);
-    background-position: 0% 100%;
-    background-repeat: no-repeat;
-    background-size: 0% 2px;
-    transition: background-size .6s;
+    align-items: left;
+    text-align: left;
+    background: url('/img/back.png');
+    height: 50px;
+    width: 50px;
+    float:left;
+    background-size: 50px 50px;
+    border: 0;
+    transition: background-size .3s;
+    border-radius: 5px;
+    background-color: rgba(0,0,0,0.5);
   }
 
   .backbutton:hover{
-    background-size: 100% 2px; 
+    background-size: 49px 49px;
     cursor: pointer;
   }
 
+  .langbutton{
+    margin-left: 20px;
+    padding-bottom: 20px;
+    align-items: left;
+    text-align: left;
+    background: url('/img/lang.png');
+    height: 50px;
+    width: 55px;
+    float:left;
+    background-size: 55px 50px;
+    border: 0;
+    transition: background-size .3s;
+    font-size: 20px;
+    color:white;
+    text-shadow: 2px 2px 2px #000;
+    border-radius: 5px;
+    background-color: rgba(0,0,0,0.5);
+  }
+
+  .langbutton:hover{
+    background-size: 52px 47px;
+    cursor: pointer;
+    
+  }
+
+  .enbutton{
+    position: absolute;
+    padding-bottom: 20px;
+    align-items: left;
+    text-align: left;
+    background: none;
+    height: 40px;
+    width: 55px;
+    margin-left: 70px;
+    margin-top: 50px;
+    border: 0;
+    transition: .3s;
+    font-size: 20px;
+    color:white;
+    background-color: rgba(0,0,0,0.5);
+    text-shadow: 2px 2px 2px #000;
+    display: none;
+  }
+
+  .rubutton{
+    position: absolute;
+    padding-bottom: 20px;
+    align-items: left;
+    text-align: left;
+    background: none;
+    height: 40px;
+    width: 55px;
+    margin-left: 70px;
+    margin-top: 90px;
+    border: 0;
+    transition: .3s;
+    font-size: 20px;
+    color:white;
+    background-color: rgba(0,0,0,0.5);
+    text-shadow: 2px 2px 2px #000;
+    display: none;
+  }
+
+    .enbutton:hover {
+        background: black;
+        cursor: pointer;
+    }
+    
+
+    .rubutton:hover {
+        background:black;
+        cursor: pointer;
+    }
 
   .time {
     font-family: "DSEG7 Classic";
-    font-size: 8rem;
+    font-size: 1.5rem;
+  }
+
+  .datetime{
+    display: inline;
+  }
+
+  .cbutton{
+    margin-left: 20px;
+    padding-bottom: 20px;
+    align-items: left;
+    text-align: left;
+    height: 50px;
+    width: 55px;
+    float:left;
+    border: 0;
+    transition: background-size .3s;
+    font-size: 20px;
+    color:white;
+    text-shadow: 2px 2px 2px #000;
+    border-radius: 5px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    background-color: rgba(0,0,0,0.5);
+    transition: .3s;
+  }
+
+  .fbutton{
+    padding-bottom: 20px;
+    align-items: left;
+    text-align: left;
+    height: 50px;
+    width: 55px;
+    float:left;
+    border: 0;
+    transition: background-size .3s;
+    font-size: 20px;
+    color:white;
+    text-shadow: 2px 2px 2px #000;
+    border-radius: 5px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    background-color: rgba(0,0,0,0.5);
+    transition: .3s;
+  }
+
+  .cbutton:hover{
+    cursor: pointer;
+  }
+
+  .fbutton:hover{
+    cursor: pointer;
+  }
+
+  .search{
+    align-items: left;
+    text-align: left;
+    height: 50px;
+    width: 295px;
+    position: absolute;
+    top: 30px;
+    right: 80px;
+    float:left;
+    background-size: 55px 50px;
+    border: 0;
+    transition: background-size .3s;
+    font-size: 35px;
+    color:white;
+    text-shadow: 2px 2px 2px #000;
+    border-radius: 5px;
+    background-color: rgba(0,0,0,0.5);
+    transition: .3s;
+  }
+
+  .searchbutton{
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    align-items: left;
+    text-align: left;
+    background: url('/img/search.png');
+    height: 50px;
+    width: 50px;
+    float:left;
+    background-size: 50px 50px;
+    border: 0;
+    transition: background-size .3s;
+    border-radius: 5px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background-color: rgba(0,0,0,0.5);
+  }
+
+  .searchbutton:hover{
+    background-size: 49px 49px;
+    cursor: pointer;
   }
 
   .date{
-    font-size: 8rem;
+    font-size: 1.5rem;
+    margin-left: 80px;
+    display: inline;
   }
   
   h1 {
@@ -164,19 +321,6 @@
           background-size: 0% 2px;
         }
         .backbutton:active{
-          background-size: 100% 2px; 
-        }
-        .quotebutton{
-          padding: 0;
-          margin: 5px;
-          font-size: 1.1rem;
-          background-size: 0% 2px;
-          transition: background-size .4s;
-        }
-        .quotebutton:hover{
-          background-size: 0% 2px;
-        }
-        .quotebutton:active{
           background-size: 100% 2px; 
         }
         h3 {

@@ -9,27 +9,21 @@
   <title>Weather</title>
 </head>
 <body>
-  <div class = "weather">
-    <i class="weather-icon owf"></i>
-    <div class="temperature"></div>
-    <div class="weather-description"></div>
-    <div class="town" contenteditable="true"></div>
-  </div>
-
-  <time class="time">
-  </time>
-  <div class="date">
-</div>
-  <h1>
-    <span class="greeting"></span>
-    <span class="username" contenteditable="true"></span>
-  </h1>
-  <h2>Какая цель на сегодня?</h2>
-  <h2 class="focus" contenteditable="true"></h2>
-  <h3>
-    <div class="backbutton">Изменить фон</div>
-    <div class="quotebutton">Изменить цитату</div>
-  </h3>
+    <div class="head">
+        <button class="backbutton"> </button>
+        <button class="langbutton"> EN </button>
+        <button class="enbutton"> EN </button>
+        <button class="rubutton"> RU </button>
+        <button class="cbutton">°C</button>
+        <button class="fbutton">°F</button>
+        <input class="search" type="text" name="city" placeholder="Поиск по городу">
+        <button class="searchbutton"> </button>
+    </div>
+    <div class="city"> </div>
+    <div class = "datetime"> 
+      <div class="date"> </div>
+      <time class="time"> </time>
+    </div>
   <script src="script.js"></script>
 </body>
 </html>
