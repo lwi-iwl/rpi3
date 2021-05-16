@@ -12,7 +12,10 @@ const
     rubutton = document.getElementsByClassName('rubutton'),
     cbutton = document.getElementsByClassName('cbutton'),
     fbutton = document.getElementsByClassName('fbutton'),
+    kbutton = document.getElementsByClassName('kbutton'),
     searchbutton = document.querySelector('.searchbutton'),
+    voicebutton = document.querySelector('.voicebutton'),
+    vbutton = document.getElementsByClassName('voicebutton'),
     ltlg = document.querySelector('.ltlg'),
     weatherIcon = document.querySelector('.weather-icon'),
     follow = document.querySelectorAll('.follow'),
@@ -20,6 +23,7 @@ const
     followdate = document.querySelectorAll('.followdate'),
     qcbutton = document.querySelector('.cbutton'),
     qfbutton = document.querySelector('.fbutton'),
+    qkbutton = document.querySelector('.kbutton'),
     qenbutton = document.querySelector('.enbutton'),
     qrubutton = document.querySelector('.rubutton'),
     map = document.querySelector('.map'),
@@ -182,6 +186,8 @@ function setMeasure(e){
       localStorage.setItem('measure', 'metric');
   else if (e.target.className == 'fbutton')
     localStorage.setItem('measure', 'imperial');
+  else if (e.target.className == 'kbutton')
+  localStorage.setItem('measure', 'standard');
   getMeasure();
   getWeather(0);
 }
@@ -190,10 +196,17 @@ function getMeasure(){
   if (localStorage.getItem('measure') === 'metric'){
     cbutton[0].style.background = 'black';
     fbutton[0].style.background = 'rgba(0,0,0,0.5)';
+    kbutton[0].style.background = 'rgba(0,0,0,0.5)';
 }
-else{
+else if (localStorage.getItem('measure') === 'imperial'){
     fbutton[0].style.background = 'black';
     cbutton[0].style.background = 'rgba(0,0,0,0.5)';
+    kbutton[0].style.background = 'rgba(0,0,0,0.5)';
+}
+else{
+  fbutton[0].style.background = 'rgba(0,0,0,0.5)';
+  cbutton[0].style.background = 'rgba(0,0,0,0.5)';
+  fbutton[0].style.background = 'black';
 }
 }
 
@@ -266,7 +279,7 @@ function hover(e){
       cbutton[0].style.background = 'rgba(0,0,0,0.5)';
     }
   }
-  else{
+  else if (e.target.className == 'fbutton'){
     if (localStorage.getItem('measure') === 'metric')
     {
       if (e.type == 'mouseenter')
@@ -275,6 +288,16 @@ function hover(e){
         fbutton[0].style.background = 'rgba(0,0,0,0.5)';
     }
   }
+  else{
+    if (localStorage.getItem('measure') === 'standart')
+    {
+      if (e.type == 'mouseenter')
+        kbutton[0].style.background = 'rgba(0,0,0,0.7)';
+      else
+        kbutton[0].style.background = 'rgba(0,0,0,0.5)';
+    }
+  }
+
 }
 
 async function setTown(e){
@@ -331,6 +354,40 @@ function getStartMeasure(){
     localStorage.setItem('measure', 'metric');
 }
 
+function voiceSearch(){
+  if (isactive == 0){
+    vbutton[0].style.animationName = 'slidein';
+    isactive = 1;
+    let lang;
+    if (localStorage.getItem('language') == 'EN')
+      lang = 'en-US'
+    else
+      lang = 'ru-RU'
+    let transcript;
+    SpeechRecognition.lang = lang;
+        SpeechRecognition.onresult = async function(event){
+          transcript = event.results[0][0].transcript;
+            console.log(event.results[0][0].transcript);
+            town = transcript.substring(0, transcript.length - 1);
+            search.value = transcript.substring(0, transcript.length - 1);
+            search.blur();
+            isTown = await getWeather(0);
+            setMap();
+            setCity();
+            if (isTown == 0)
+            edBackground();
+            SpeechRecognition.stop();
+            voiceSearch();
+        };
+  SpeechRecognition.start();
+  }
+  else{
+    SpeechRecognition.stop();
+    vbutton[0].style.animationName = 'none';
+    isactive = 0;
+  }
+}
+
 async function start(){
   await getStartMeasure();
   await getLanguage();
@@ -351,7 +408,9 @@ wind,
 humidity,
 speed,
 latitude,
-longitude;
+longitude,
+isactive = 0;
+var SpeechRecognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
 var isEnter = 0;
 var timezone;
 backbutton.addEventListener('click', edBackground);
@@ -364,13 +423,17 @@ qenbutton.addEventListener('click', setLanguage);
 qrubutton.addEventListener('click', setLanguage);
 qcbutton.addEventListener('click', setMeasure);
 qfbutton.addEventListener('click', setMeasure);
+qkbutton.addEventListener('click', setMeasure);
 qcbutton.addEventListener('mouseenter',  hover);
 qfbutton.addEventListener('mouseenter', hover);
+qkbutton.addEventListener('mouseenter', hover);
 qcbutton.addEventListener('mouseleave', hover);
 qfbutton.addEventListener('mouseleave', hover);
+qkbutton.addEventListener('mouseleave', hover);
 langbutton.addEventListener('blur', setNoneVisible);
 search.addEventListener('keypress', setTown);
 searchbutton.addEventListener('click', setTown);
+voicebutton.addEventListener('click', voiceSearch);
 
 document.body.style.backgroundImage = "url('back.jpg')";
 start();

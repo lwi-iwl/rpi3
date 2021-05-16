@@ -222,6 +222,24 @@
     font-size: 20px;
     color:white;
     text-shadow: 2px 2px 2px #000;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    background-color: rgba(0,0,0,0.5);
+    transition: .3s;
+  }
+
+  .kbutton{
+    padding-bottom: 20px;
+    align-items: left;
+    text-align: left;
+    height: 50px;
+    width: 55px;
+    float:left;
+    border: 0;
+    transition: background-size .3s;
+    font-size: 20px;
+    color:white;
+    text-shadow: 2px 2px 2px #000;
     border-radius: 5px;
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
@@ -237,12 +255,16 @@
     cursor: pointer;
   }
 
+  .kbutton:hover{
+    cursor: pointer;
+  }
+
   #map { 
     top: 170px;
     right: 30px;
     position: absolute;
     height: 345px;
-    width: 445px;
+    width: 510px;
     border-radius: 10px;
     clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 25% 100%, 0% 50%);
   }
@@ -260,10 +282,10 @@
     align-items: left;
     text-align: left;
     height: 50px;
-    width: 295px;
+    width: 285px;
     position: absolute;
     top: 30px;
-    right: 80px;
+    right: 130px;
     float:left;
     background-size: 55px 50px;
     border: 0;
@@ -271,7 +293,8 @@
     font-size: 20px;
     color:white;
     text-shadow: 2px 2px 2px #000;
-    border-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
     background-color: rgba(0,0,0,0.5);
     transition: .3s;
   }
@@ -299,6 +322,51 @@
     background-size: 49px 49px;
     cursor: pointer;
   }
+
+  .voicebutton{
+    position: absolute;
+    top: 30px;
+    right: 80px;
+    align-items: left;
+    text-align: left;
+    background: url('/img/voice.png');
+    height: 50px;
+    width: 50px;
+    float:left;
+    background-size: 50px 50px;
+    border: 0;
+    transition: background-size .3s;
+    background-color: rgba(0,0,0,0.5);
+    background-position: center;
+    animation-duration: 2s;
+		animation-iteration-count:infinite;
+  }
+
+  .voicebutton:hover{
+    background-size: 49px 49px;
+    cursor: pointer;
+  }
+
+
+  	@keyframes slidein 
+	  {
+		from 
+		{
+      background-size: 50px 50px;
+		}
+   		25%
+		{
+			background-size: 44px 44px;
+   		}
+   		50%, 75%
+		{
+      background-size: 50px 50px;
+   		}
+   		to
+		{
+      background-size: 50px 50px;
+   		}
+  	}
 
   .date{
     font-size: 1.5rem;
