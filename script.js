@@ -12,7 +12,7 @@ const
     rubutton = document.getElementsByClassName('rubutton'),
     cbutton = document.getElementsByClassName('cbutton'),
     fbutton = document.getElementsByClassName('fbutton'),
-    kbutton = document.getElementsByClassName('kbutton'),
+    kbutton = document.getElementsByClassName('kfbutton'),
     searchbutton = document.querySelector('.searchbutton'),
     voicebutton = document.querySelector('.voicebutton'),
     vbutton = document.getElementsByClassName('voicebutton'),
@@ -23,7 +23,7 @@ const
     followdate = document.querySelectorAll('.followdate'),
     qcbutton = document.querySelector('.cbutton'),
     qfbutton = document.querySelector('.fbutton'),
-    qkbutton = document.querySelector('.kbutton'),
+    qkbutton = document.querySelector('.kfbutton'),
     qenbutton = document.querySelector('.enbutton'),
     qrubutton = document.querySelector('.rubutton'),
     map = document.querySelector('.map'),
@@ -186,8 +186,8 @@ function setMeasure(e){
       localStorage.setItem('measure', 'metric');
   else if (e.target.className == 'fbutton')
     localStorage.setItem('measure', 'imperial');
-  else if (e.target.className == 'kbutton')
-  localStorage.setItem('measure', 'standard');
+  else if (e.target.className == 'kfbutton')
+  localStorage.setItem('measure', 'standart');
   getMeasure();
   getWeather(0);
 }
@@ -206,7 +206,7 @@ else if (localStorage.getItem('measure') === 'imperial'){
 else{
   fbutton[0].style.background = 'rgba(0,0,0,0.5)';
   cbutton[0].style.background = 'rgba(0,0,0,0.5)';
-  fbutton[0].style.background = 'black';
+  kbutton[0].style.background = 'black';
 }
 }
 
@@ -280,7 +280,7 @@ function hover(e){
     }
   }
   else if (e.target.className == 'fbutton'){
-    if (localStorage.getItem('measure') === 'metric')
+    if (localStorage.getItem('measure') != 'imperial')
     {
       if (e.type == 'mouseenter')
         fbutton[0].style.background = 'rgba(0,0,0,0.7)';
@@ -289,7 +289,7 @@ function hover(e){
     }
   }
   else{
-    if (localStorage.getItem('measure') === 'standart')
+    if (localStorage.getItem('measure') != 'standart')
     {
       if (e.type == 'mouseenter')
         kbutton[0].style.background = 'rgba(0,0,0,0.7)';
@@ -401,7 +401,7 @@ async function start(){
 
 var town,
 oldtown,
-rustown,
+enrustown,
 country,
 feelslike,
 wind,
@@ -415,10 +415,10 @@ var isEnter = 0;
 var timezone;
 backbutton.addEventListener('click', edBackground);
 langbutton.addEventListener('click', setVisible);
-qenbutton.addEventListener('mouseenter',  (() => { isEnter = 1}))
-qrubutton.addEventListener('mouseenter', (() => { isEnter = 1}))
-qenbutton.addEventListener('mouseleave', (() => { isEnter = 0}))
-qrubutton.addEventListener('mouseleave', (() => { isEnter = 0}))
+qenbutton.addEventListener('mouseenter',  (() => { isEnter = 1}));
+qrubutton.addEventListener('mouseenter', (() => { isEnter = 1}));
+qenbutton.addEventListener('mouseleave', (() => { isEnter = 0}));
+qrubutton.addEventListener('mouseleave', (() => { isEnter = 0}));
 qenbutton.addEventListener('click', setLanguage);
 qrubutton.addEventListener('click', setLanguage);
 qcbutton.addEventListener('click', setMeasure);

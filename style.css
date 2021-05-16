@@ -33,6 +33,7 @@
     margin-left: 80px;
     margin-top: 50px;
     font-size:50px;
+    transition: .6s;
   }
 
   .weather{
@@ -42,23 +43,27 @@
   .temp{
     font-size: 250px;
     margin-left: 60px;
+    transition: .6s;
   }
 
   .weather-icon{
     font-size: 200px;
     margin-top: -35px;
     margin-left: -20px;
+    transition: .6s;
   }
 
   .weather-adds{
     font-size: 22px;
     margin-top: 140px;
     margin-left: -100px;
+    transition: .6s;
   }
 
   .following{
     display:flex;
     margin-left: 25px;
+    transition: .6s;
   }
 
   .foll{
@@ -70,21 +75,25 @@
     display:inline;
     margin-top: -40px;
     font-size: 100px;
+    transition: .6s;
   }
 
   .follow-icon{
     margin-left: -10px;
     display:inline;
     font-size: 100px;
+    transition: .6s;
   }
 
   .followdate{
     font-size: 20px;
+    transition: .6s;
   }
 
   .head{
     margin-left: 80px;
     margin-top: 30px;
+    transition: .6s;
   }
   
   .backbutton{
@@ -123,6 +132,7 @@
     text-shadow: 2px 2px 2px #000;
     border-radius: 5px;
     background-color: rgba(0,0,0,0.5);
+    transition: .6s;
   }
 
   .langbutton:hover{
@@ -228,7 +238,7 @@
     transition: .3s;
   }
 
-  .kbutton{
+  .kfbutton{
     padding-bottom: 20px;
     align-items: left;
     text-align: left;
@@ -255,7 +265,7 @@
     cursor: pointer;
   }
 
-  .kbutton:hover{
+  .kfbutton:hover{
     cursor: pointer;
   }
 
@@ -267,6 +277,7 @@
     width: 510px;
     border-radius: 10px;
     clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 25% 100%, 0% 50%);
+    transition: .6s;
   }
 
 
@@ -276,6 +287,7 @@
     top: 570px;
     right: 30px;
     position: absolute;
+    transition: .6s;
   }
 
   .search{
@@ -296,7 +308,7 @@
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     background-color: rgba(0,0,0,0.5);
-    transition: .3s;
+    transition: .6s;
   }
 
   .searchbutton{
@@ -316,6 +328,7 @@
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     background-color: rgba(0,0,0,0.5);
+    transition: .6s;
   }
 
   .searchbutton:hover{
@@ -340,6 +353,7 @@
     background-position: center;
     animation-duration: 2s;
 		animation-iteration-count:infinite;
+    transition: .6s;
   }
 
   .voicebutton:hover{
@@ -372,86 +386,202 @@
     font-size: 1.5rem;
     margin-left: 80px;
     display: inline;
-  }
-  
-  h1 {
-    margin-bottom: 3rem;
-  }
-  
-  h2 {
-    margin-top: 0.5rem;
+    transition: .6s;
   }
 
-  h3 {
-    position: fixed;
-    bottom: 0;
-    margin-bottom: 60px;
-  }
 
-  #g{
-    display:none;
-  }
+  @media screen and (max-width: 1500px) {
+    body {
+      background-size:auto;
+    }
+    .search{
+      width: 225px;
+      font-size: 15px;
+    }
 
-  @media screen and (max-width: 1404px) {
-    .date {
-      font-size: 6rem;
+    #map { 
+      width: 440px;
     }
 }
 
-    @media screen and (max-width: 1052px) {
-        .date {
-          font-size: 5rem;
-        }
-    }
-
-  @media screen and (max-width: 882px) {
-    .date {
-      font-size: 4rem;
-    }
-  }
-
-  @media screen and (max-width: 704px) {
-    .time{
-        font-size: 6em;
-    }
-    .date {
-      font-size: 3rem;
-    }
-    .backbutton{
-        margin:1rem;
-    }
-    .quotebutton{
-        margin:1rem;
-    }
-}
-    @media screen and (max-width: 536px) {
-      .time{
-        font-size: 5em;
+    @media screen and (max-width: 1400px) {
+      .temp{
+        margin-top: 50px;
+        font-size: 200px;
       }
-        .date {
-            font-size: 2rem;
-          }
-          h1{
-              font-size: 1.5rem;
-          }
-        .backbutton{
-          padding: 0;
-          margin: 5px;
-          font-size: 1.1rem;
-          background-size: 0% 2px;
-          transition: background-size .4s;
-        }
-        .backbutton:hover{
-          background-size: 0% 2px;
-        }
-        .backbutton:active{
-          background-size: 100% 2px; 
-        }
-        h3 {
-          position: fixed;
-          bottom: 0;
-          margin-bottom: 100px;
-        }
+    
+      .weather-icon{
+        margin-top: 20px;
+        font-size: 150px;
+      }
+    
+      .weather-adds{
+        font-size: 20px;
+      }
+
+      .follow{
+        font-size: 70px;
+      }
+    
+      .follow-icon{
+        font-size: 70px;
+      }
+    }
+
+  @media screen and (max-width: 1200px) {
+    .temp{
+      margin-top: 50px;
+      font-size: 150px;
+    }
+  
+    .weather-icon{
+      margin-top: 30px;
+      font-size: 100px;
+    }
+  
+    .weather-adds{
+      font-size: 15px;
+    }
+
+    .follow{
+      font-size: 50px;
+    }
+  
+    .follow-icon{
+      font-size: 50px;
+    }
+  }
+
+  @media screen and (max-width: 1000px) {
+    .temp{
+      margin-top: 50px;
+      font-size: 100px;
+    }
+  
+    .weather-icon{
+      margin-top: 30px;
+      font-size: 70px;
+    }
+  
+    .weather-adds{
+      margin-top:80px;
+      margin-left: 10px;
+      font-size: 15px;
+    }
+
+    .follow{
+      font-size: 30px;
+    }
+  
+    .follow-icon{
+      font-size: 30px;
+    }
+}
+    @media screen and (max-width: 960px) {
+      .weather-adds{
+        margin-left: -250px;
+        margin-top:150px;
+        margin-bottom: 20px;
+      }
+
+      .city{
+        margin-left: 70px;
+        margin-top: 50px;
+        font-size:30px;
+      }
+
+      .head{
+        margin-left: 70px;
+        margin-top: 30px;
+      }
       
+      .date{
+        font-size: 1.2rem;
+        margin-left: 70px;
+        display: inline;
+      }
+
+      .following{
+        display:flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        margin-left: 25px;
+      }
+    }
+
+    @media screen and (max-width: 750px) {
+
+      .head{
+        margin-left:20px;
+      }
+
+      .following{
+        display:flex;
+        flex-direction: row;
+        margin-left: 0px;
+      }
+
+      .cbutton{
+        margin-left: 10px;
+      }
+
+      .search{
+        font-size: 14px;
+        align-items: left;
+        text-align: left;
+        top: 90px;
+        left: 20px;
+        width: 190px;
+      }
+    
+      .searchbutton{
+        position: absolute;
+        top: 90px;
+        left: 260px;
+      }
+    
+      .voicebutton{
+        position: absolute;
+        top: 90px;
+        left: 210px;
+      }
+
+      .langbutton{
+        margin-left: 10px;
+      }
+  
+      .city{
+        margin-left: 20px;
+        margin-top: 80px;
+        font-size: 25px;
+      }
+
+      .date{
+        margin-left: 20px;
+      }
+
+      .temp{
+        margin-left: 20px;
+      }
+
+      #map {
+        position: absolute;
+        top:600px;
+        height: 205px;
+        width: 300px;
+        right: 10px;
+      }
+
+      .foll{
+        display:inline;
+        margin-left: 20px;
+      }
+
+      .ltlg{
+        font-size: 18px;
+        top: 820px;
+        right: 10px;
+      }
+
     }
   
