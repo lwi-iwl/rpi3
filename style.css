@@ -479,7 +479,7 @@
 }
     @media screen and (max-width: 960px) {
       .weather-adds{
-        margin-left: -250px;
+        margin-left: -200px;
         margin-top:150px;
         margin-bottom: 20px;
       }
@@ -581,6 +581,12 @@
         font-size: 18px;
         top: 820px;
         right: 10px;
+      }
+
+      .weather-adds{
+        margin-left: -200px;
+        margin-top:150px;
+        margin-bottom: 20px;
       }
 
     }
