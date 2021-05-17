@@ -324,19 +324,27 @@ async function getCoordinates(){
 }
 
 async function setMap(){
+  marker.remove();
   const data = await getCoordinates();
-	mapboxgl.accessToken = 'pk.eyJ1Ijoibmlrc3QiLCJhIjoiY2tvcTJ3NjVwMHJjZDJ5bnV6dHVzdjhlZCJ9.8B-D92hQsycsBHOyCWxtdQ';
-  var map = new mapboxgl.Map({
+  map1.flyTo({center: [data.results[0].geometry.lng, data.results[0].geometry.lat]});
+  marker = new mapboxgl.Marker()
+  .setLngLat([data.results[0].geometry.lng, data.results[0].geometry.lat])
+  .addTo(map1);
+  }
+
+async function startMap(){
+  const data = await getCoordinates();
+  mapboxgl.accessToken = 'pk.eyJ1Ijoibmlrc3QiLCJhIjoiY2tvcTJ3NjVwMHJjZDJ5bnV6dHVzdjhlZCJ9.8B-D92hQsycsBHOyCWxtdQ';
+  map1 = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v11',
     center: [data.results[0].geometry.lng, data.results[0].geometry.lat],
     zoom: 12
     });
-    var marker1 = new mapboxgl.Marker()
+    marker = new mapboxgl.Marker()
     .setLngLat([data.results[0].geometry.lng, data.results[0].geometry.lat])
-    .addTo(map);
-  }
-
+    .addTo(map1);
+}
 
 function setCity(){
   if (localStorage.getItem('language') == 'EN'){
@@ -393,7 +401,7 @@ async function start(){
   await getLanguage();
   await getWeather(0);
   await edBackground();
-  setMap();
+  startMap();
   setCity();
   getMeasure();
   showDate();
@@ -409,7 +417,9 @@ humidity,
 speed,
 latitude,
 longitude,
-isactive = 0;
+isactive = 0,
+map1,
+marker1;;
 var SpeechRecognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
 var isEnter = 0;
 var timezone;

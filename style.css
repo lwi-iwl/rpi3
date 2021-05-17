@@ -392,7 +392,7 @@
 
   @media screen and (max-width: 1500px) {
     body {
-      background-size:auto;
+      background-size:cover;
     }
     .search{
       width: 225px;
